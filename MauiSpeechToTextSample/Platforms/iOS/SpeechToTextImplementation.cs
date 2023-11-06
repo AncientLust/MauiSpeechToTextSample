@@ -38,6 +38,9 @@ public class SpeechToTextImplementation : ISpeechToText
         //if (OperatingSystem.IsIOSVersionAtLeast(13))
         //    liveSpeechRequest.RequiresOnDeviceRecognition = true;
 
+        // Solution
+        var audioSession = AVAudioSession.SharedInstance();
+        audioSession.SetCategory(AVAudioSessionCategory.PlayAndRecord, AVAudioSessionCategoryOptions.DefaultToSpeaker);
 
         var node = audioEngine.InputNode;
         var recordingFormat = node.GetBusOutputFormat(new UIntPtr(0));

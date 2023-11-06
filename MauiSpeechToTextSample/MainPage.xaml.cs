@@ -9,6 +9,7 @@ public partial class MainPage : ContentPage
 
     public Command ListenCommand { get; set; }
     public Command ListenCancelCommand { get; set; }
+    public Command SayTestPhraseCommand { get; set; }
     public string RecognitionText { get; set; }
 
     public MainPage(ISpeechToText speechToText)
@@ -19,6 +20,7 @@ public partial class MainPage : ContentPage
 
         ListenCommand = new Command(Listen);
 		ListenCancelCommand = new Command(ListenCancel);
+        SayTestPhraseCommand = new Command(SayTestPhrase);
         BindingContext = this;
     }
 
@@ -58,6 +60,19 @@ public partial class MainPage : ContentPage
     private void ListenCancel()
     {
         tokenSource?.Cancel();
+    }
+
+    private async void SayTestPhrase()
+    {
+        var textToSpeech = TextToSpeech.Default;
+        var locales = await textToSpeech.GetLocalesAsync();
+        var currentLocale = locales.FirstOrDefault(locale => locale.Language == "en-US");
+        await textToSpeech.SpeakAsync(RecognitionText ?? "Welcome to .NET MAUI Community Toolkit!", new()
+        {
+            Locale = currentLocale,
+            Pitch = 1,
+            Volume = 1
+        }, CancellationToken.None);
     }
 }
 

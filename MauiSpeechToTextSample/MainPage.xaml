@@ -24,6 +24,11 @@
                 Command="{Binding ListenCancelCommand}"
                 HorizontalOptions="Center" />
 
+            <Button
+                Text="Say recognition result"
+                Command="{Binding SayTestPhraseCommand}"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 
